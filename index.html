@@ -34,6 +34,7 @@
       .countdown-item {
         background: linear-gradient(135deg, #ff6b6b, #ffa500);
         color: white;
+        font-size: 44px;
         padding: 15px;
         border-radius: 10px;
         min-width: 80px;
@@ -74,6 +75,17 @@
         pointer-events: none;
         animation: fall 3s linear;
       }
+      #transition-overlay {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 0;
+        background-color: #ee9ca7; /* Sesuaikan warna pink agar menyerupai latar belakang */
+        z-index: 1000;
+        transition: all 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+        transform-origin: bottom left;
+      }
       @keyframes fall {
         to {
           transform: translateY(100vh) rotate(360deg);
@@ -82,6 +94,7 @@
     </style>
   </head>
   <body>
+    <div id="transition-overlay"></div>
     <div class="birthday-container">
       <h1>Countdown to Your Birthday!</h1>
       <div id="countdown">
@@ -132,6 +145,7 @@
       }
 
       function navigateToIndex() {
+        const transitionOverlay = document.getElementById("transition-overlay");
         const confettiColors = ["#FF6B6B", "#FFA500", "#FFFF00", "#FF1493", "#00BFFF"];
         const confettiCount = 50;
 
@@ -160,6 +174,10 @@
             confetti.remove();
           }, 3000);
         }
+
+        // Add pink transition overlay
+        transitionOverlay.style.width = `${Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) * 2}px`;
+        transitionOverlay.style.height = `${Math.sqrt(window.innerWidth * window.innerWidth + window.innerHeight * window.innerHeight) * 2}px`;
 
         // Navigate to index after a short delay to show confetti
         setTimeout(() => {
